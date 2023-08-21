@@ -1,10 +1,10 @@
 from typing import TypeVar
+from collections import defaultdict
 
 __all__ = (
     'flip_kv_vk',
     'flip_kv_vk_safe',
 )
-
 
 KT = TypeVar('KT')
 KV = TypeVar('KV')
@@ -23,7 +23,7 @@ def flip_kv_vk(d: dict[KT, KV]) -> dict[KV, KT]:
         'Москва': 'moscow',
     }
     """
-    raise NotImplementedError
+    return {value: key for key, value in d.items()}
 
 
 def flip_kv_vk_safe(d: dict[KT, KV]) -> dict[KV, list[KT]]:
@@ -39,4 +39,9 @@ def flip_kv_vk_safe(d: dict[KT, KV]) -> dict[KV, list[KT]]:
         '+3': ['Москва', 'Санкт-Петербург'],
     }
     """
-    raise NotImplementedError
+    result = defaultdict(list)
+
+    for key, value in d.items():
+        result[value].append(key)
+
+    return result
